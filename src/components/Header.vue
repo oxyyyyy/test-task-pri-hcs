@@ -165,7 +165,7 @@ export default {
           stagger: 0.075
         })
         .to(".header__left-text-vertical", {
-          x: -40,
+          x: -30,
           opacity: 1
         });
       return timelineLeftText;
@@ -403,7 +403,7 @@ $green: #03b3b0;
   left: 0;
   text-align: center;
   opacity: 0;
-  transform: translate3d(-30px, 0px, 0px) rotate(-90deg);
+  transform: translate3d(-60px, 0px, 0px) rotate(-90deg);
 
   .header__title-vertical {
     margin-bottom: 0;

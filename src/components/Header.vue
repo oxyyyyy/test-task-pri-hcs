@@ -74,9 +74,9 @@ import { gsap } from "gsap";
 import photoBack from "@/assets/WomanTremfya_MQ.png";
 import photoFront from "@/assets/WomanPsoriasis_MQ.png";
 
-let timelineBackground;
 let timelinePhotoBack;
 let timelinePhotoFront;
+let masterTimeline;
 
 export default {
   name: "Header",
@@ -91,73 +91,67 @@ export default {
     window.addEventListener("resize", this.onWindowResize);
   },
   mounted() {
-    const { divider, photoItemBack, photoItemFront } = this.$refs;
+    const { divider, photoItemFront, photoItemBack } = this.$refs;
     this.windowWidth = window.innerWidth;
 
-    timelineBackground = gsap.timeline();
+    gsap.defaults({ ease: "linear", duration: 0.2 });
+
+    const leftTextScene = () => {
+      let timelineLeftText = gsap.timeline();
+      timelineLeftText
+        .from(".header__left-text-vertical", {
+          x: 0,
+          opacity: 1
+        })
+        .from(".header-left-text-stagger", {
+          x: -75,
+          opacity: 0,
+          stagger: 0.075
+        });
+      return timelineLeftText;
+    };
+
+    const rightTextScene = () => {
+      let timelineRightText = gsap.timeline();
+      timelineRightText
+        .to(".header-right-text-stagger", {
+          x: 75,
+          opacity: 0,
+          stagger: 0.075
+        })
+        .to(".header__right-text-vertical", {
+          x: 0,
+          opacity: 1
+        });
+      return timelineRightText;
+    };
+
+    const backgroundScene = () => {
+      let timelineBackground = gsap.timeline();
+      timelineBackground.to(divider, {
+        x: this.windowWidth - 400,
+        duration: 1
+      });
+      return timelineBackground;
+    };
+
+    masterTimeline = gsap
+      .timeline()
+      .add(leftTextScene())
+      .add(backgroundScene(), "-=0.5")
+      .add(rightTextScene(), "-=0.5");
+
     timelinePhotoBack = gsap.timeline();
     timelinePhotoFront = gsap.timeline();
 
-    timelineBackground
-      .to(
-        ".header__left-text-vertical",
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.2,
-          ease: "linear"
-        },
-        "-=0.3"
-      )
-      .from(
-        ".header-left-text-stagger",
-        {
-          x: -75,
-          opacity: 0,
-          duration: 0.2,
-          ease: "linear",
-          stagger: 0.075
-        },
-        "-=0.3"
-      )
-      .to(divider, {
-        x: this.windowWidth - 400,
-        duration: 1,
-        ease: "linear"
-      })
-      .to(
-        ".header-right-text-stagger",
-        {
-          x: 75,
-          opacity: 0,
-          duration: 0.2,
-          ease: "linear",
-          stagger: 0.075
-        },
-        "-=0.3"
-      )
-      .to(
-        ".header__right-text-vertical",
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.2,
-          ease: "linear"
-        },
-        "-=0.1"
-      );
     timelinePhotoBack.to(photoItemFront, {
-      width: 800,
-      duration: 1,
-      ease: "linear"
+      width: 800
     });
     timelinePhotoFront.to(photoItemBack, {
-      width: 0,
-      duration: 1,
-      ease: "linear"
+      width: 0
     });
 
-    timelineBackground.pause();
+    masterTimeline.pause();
     timelinePhotoBack.pause();
     timelinePhotoFront.pause();
   },
@@ -170,15 +164,13 @@ export default {
     },
     onMouseMove(event) {
       const mouseX = event.x;
-      // const cursorReversedX =
-      //   this.windowWidth - mouseX - divider.offsetWidth / 2;
       const percentOfCursorPosX = mouseX / this.windowWidth;
 
-      timelineBackground.progress(1 - percentOfCursorPosX);
       timelinePhotoBack.progress(1 - percentOfCursorPosX);
       timelinePhotoFront.progress(1 - percentOfCursorPosX);
+      masterTimeline.progress(1 - percentOfCursorPosX);
 
-      // * ------
+      // * Some attempt to sync photo & bg
       // const { photoItemBack } = this.$refs;
       // const boundingRect = photoItemBack.getBoundingClientRect();
       // const mouseXtemp = event.x;
@@ -276,6 +268,12 @@ export default {
   .header__title {
     margin-bottom: 10px;
   }
+
+  .header__link {
+    &:hover {
+      color: #e9c46a;
+    }
+  }
 }
 
 .header__left-text {
@@ -286,6 +284,12 @@ export default {
 
   .header__title {
     margin-bottom: 10px;
+  }
+
+  .header__link {
+    &:hover {
+      color: #2a9d8f;
+    }
   }
 }
 
@@ -327,10 +331,6 @@ export default {
   text-decoration: none;
   margin-top: 20px;
   transition: color 0.15s ease;
-
-  &:hover {
-    color: #e9c46a;
-  }
 }
 
 .header__title-vertical {

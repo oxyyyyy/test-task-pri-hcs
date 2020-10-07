@@ -227,8 +227,8 @@ export default {
         const mouseX = event.x;
         const percentOfCursorPosX = mouseX / this.windowWidth;
 
-        timelinePhotoBack.progress(1 - percentOfCursorPosX);
-        timelinePhotoFront.progress(1 - percentOfCursorPosX);
+        timelinePhotoBack.progress(percentOfCursorPosX);
+        timelinePhotoFront.progress(percentOfCursorPosX);
         masterTimeline.progress(percentOfCursorPosX);
       }
 
@@ -298,13 +298,15 @@ $green: #03b3b0;
   &--back {
     width: 0;
     z-index: 5;
+    background-position: right;
+    right: 0;
   }
 
   &--front {
     width: 800px;
     z-index: 10;
-    right: 0;
-    background-position: right;
+    left: 0;
+    background-position: left;
   }
 }
 

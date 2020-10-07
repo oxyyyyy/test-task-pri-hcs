@@ -76,7 +76,9 @@
     </div>
 
     <div class="header__right-text" ref="headerRightText">
-      <h3 class="header__title header-right-text-stagger">tremfya</h3>
+      <h3 class="header__title header-right-text-stagger pseudo-text-letter">
+        tremfya
+      </h3>
       <p class="header__subtitle header-right-text-stagger">(guselcumab)</p>
       <a href="/some-route" class="header__link header-right-text-stagger"
         >learn more -></a
@@ -493,5 +495,13 @@ $green: #03b3b0;
 
 .header-left-text-stagger {
   overflow: hidden;
+}
+
+.header-right-text-stagger {
+  &.pseudo-text-letter {
+    &::after {
+      content: "T";
+    }
+  }
 }
 </style>

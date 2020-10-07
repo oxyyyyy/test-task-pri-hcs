@@ -265,9 +265,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$yellow: #f8b735;
+$green: #03b3b0;
+
 .header {
   padding: 30px 0;
-  background-color: #f8b735;
+  background-color: $yellow;
   margin: 0;
   overflow: hidden;
   position: relative;
@@ -330,7 +333,7 @@ export default {
 .divider-green {
   width: 2050px;
   height: 3830px;
-  background-color: #03b3b0;
+  background-color: $green;
   clip-path: url(#clip);
   position: absolute;
   bottom: 0;
@@ -339,7 +342,7 @@ export default {
 }
 
 .header__right-text {
-  color: #f8b735;
+  color: $yellow;
   position: absolute;
   right: 260px;
   text-align: right;
@@ -350,13 +353,13 @@ export default {
 
   .header__link {
     &:hover {
-      color: #f8b735;
+      color: $yellow;
     }
   }
 }
 
 .header__left-text {
-  color: #03b3b0;
+  color: $green;
   position: absolute;
   left: 260px;
   text-align: left;
@@ -368,7 +371,7 @@ export default {
 
   .header__link {
     &:hover {
-      color: #03b3b0;
+      color: $green;
     }
   }
 }
@@ -386,7 +389,7 @@ export default {
 }
 
 .header__right-text-vertical {
-  color: #f8b735;
+  color: $yellow;
   position: absolute;
   right: 0;
   text-align: center;
@@ -395,7 +398,7 @@ export default {
 }
 
 .header__left-text-vertical {
-  color: #03b3b0;
+  color: $green;
   position: absolute;
   left: 0;
   text-align: center;
@@ -476,7 +479,7 @@ export default {
 
   &::before {
     content: "";
-    background-color: #03b3b0;
+    background-color: $green;
     width: 100%;
     height: 100%;
     position: absolute;

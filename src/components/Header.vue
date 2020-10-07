@@ -99,14 +99,14 @@ export default {
     const leftTextScene = () => {
       let timelineLeftText = gsap.timeline();
       timelineLeftText
-        .from(".header__left-text-vertical", {
-          x: 0,
-          opacity: 1
-        })
-        .from(".header-left-text-stagger", {
-          x: -75,
+        .to(".header-left-text-stagger", {
+          x: 75,
           opacity: 0,
           stagger: 0.075
+        })
+        .to(".header__left-text-vertical", {
+          x: 0,
+          opacity: 1
         });
       return timelineLeftText;
     };
@@ -114,14 +114,14 @@ export default {
     const rightTextScene = () => {
       let timelineRightText = gsap.timeline();
       timelineRightText
-        .to(".header-right-text-stagger", {
+        .from(".header__right-text-vertical", {
+          x: 0,
+          opacity: 1
+        })
+        .from(".header-right-text-stagger", {
           x: 75,
           opacity: 0,
           stagger: 0.075
-        })
-        .to(".header__right-text-vertical", {
-          x: 0,
-          opacity: 1
         });
       return timelineRightText;
     };
@@ -129,7 +129,7 @@ export default {
     const backgroundScene = () => {
       let timelineBackground = gsap.timeline();
       timelineBackground.to(divider, {
-        x: this.windowWidth - 400,
+        x: 300,
         duration: 1
       });
       return timelineBackground;
@@ -137,18 +137,18 @@ export default {
 
     masterTimeline = gsap
       .timeline()
-      .add(leftTextScene())
+      .add(rightTextScene())
       .add(backgroundScene(), "-=0.5")
-      .add(rightTextScene(), "-=0.5");
+      .add(leftTextScene(), "-=0.5");
 
     timelinePhotoBack = gsap.timeline();
     timelinePhotoFront = gsap.timeline();
 
     timelinePhotoBack.to(photoItemFront, {
-      width: 800
+      width: 0
     });
     timelinePhotoFront.to(photoItemBack, {
-      width: 0
+      width: 800
     });
 
     masterTimeline.pause();
@@ -168,7 +168,7 @@ export default {
 
       timelinePhotoBack.progress(1 - percentOfCursorPosX);
       timelinePhotoFront.progress(1 - percentOfCursorPosX);
-      masterTimeline.progress(1 - percentOfCursorPosX);
+      masterTimeline.progress(percentOfCursorPosX);
 
       // * Some attempt to sync photo & bg
       // const { photoItemBack } = this.$refs;
@@ -214,15 +214,15 @@ export default {
   height: 720px;
 
   &--back {
-    width: 800px;
+    width: 0;
     z-index: 5;
-    right: 0;
-    background-position: right;
   }
 
   &--front {
-    width: 0;
+    width: 800px;
     z-index: 10;
+    right: 0;
+    background-position: right;
   }
 }
 
@@ -240,7 +240,7 @@ export default {
 
 .divider {
   width: 100px;
-  transform: translate3d(200px, 0px, 0px);
+  transform: translate3d(1500px, 0px, 0px);
 }
 
 .divider-inner {

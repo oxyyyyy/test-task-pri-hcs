@@ -191,7 +191,7 @@ export default {
     const backgroundScene = () => {
       let timelineBackground = gsap.timeline();
       timelineBackground.to(divider, {
-        x: 300,
+        x: 200,
         duration: 1
       });
       return timelineBackground;
@@ -326,7 +326,7 @@ $green: #03b3b0;
 
 .divider {
   width: 100px;
-  transform: translate3d(1500px, 0px, 0px);
+  transform: translate3d(calc(100vw - 300px), 0px, 0px);
 }
 
 .divider-inner {
@@ -348,7 +348,7 @@ $green: #03b3b0;
 .header__right-text {
   color: $yellow;
   position: absolute;
-  right: 260px;
+  right: 12%;
   text-align: right;
 
   .header__title {
@@ -365,7 +365,7 @@ $green: #03b3b0;
 .header__left-text {
   color: $green;
   position: absolute;
-  left: 260px;
+  left: 12%;
   text-align: left;
 
   .header__title {
